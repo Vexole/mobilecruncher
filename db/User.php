@@ -1,7 +1,8 @@
 <?php
-require_once('database.php');
-require_once('queries.php');
+require_once('Database.php');
+require_once('Queries.php');
 require_once('./utils/formValidationUtils.php');
+require_once('Cart.php');
 session_start();
 
 class User
@@ -142,6 +143,10 @@ class User
                 if (password_verify($this->password, $row['password'])) {
                     session_regenerate_id();
                     $_SESSION["userId"] = $row['id'];
+
+                    $cart = new Cart(["userId" => $row['id']]);
+                    $cart->getCart();
+                    
                     header('location: index.php');
                 } else {
                     $this->errors[] = "Invalid credentials. Please try again!";
@@ -164,7 +169,7 @@ class User
     function redirectIfLoggedIn()
     {
         if (!empty($_SESSION["userId"])) {
-            header("location: welcome.php");
+            header("location: index.php");
         }
     }
 

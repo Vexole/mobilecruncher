@@ -1,5 +1,5 @@
 <?php
-require_once('./db/user.php');
+require_once('./db/User.php');
 $user = null;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = new User($_POST);
