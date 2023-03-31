@@ -56,6 +56,22 @@ class Queries
     public static $updateCartById = "UPDATE carts SET total=:total, status=:status 
         WHERE id=:cartId";
 
+    public static $completeSaleById = "UPDATE carts SET status='COMPLETE' 
+        WHERE id=:cartId";
+
     public static $updateCartDetailsById = "UPDATE cart_details SET quantity=:quantity
         WHERE cart_id=:cartId AND product_id=:productId";
+
+    public static $removeProductFromCart = "DELETE FROM cart_details
+        WHERE cart_id=:cartId AND product_id=:productId";
+
+    public static $saveSaleDetails = "INSERT INTO sales(cart_id, total, payment_method_id, 
+        billing_address_id, purchased_date) 
+        VALUES (:cartId, :total, :paymentMethodId, :billingAddressId, NOW())";
+
+    public static $saveBillingAddress = "INSERT INTO billing_address(first_name, last_name, email,
+        phone, address_line, city, country)
+        VALUES(:firstName, :lastName, :email, :phone, :addressLine, :city, :country)";
+
+    public static $getPaymentMethods = "SELECT * FROM payment_methods";
 }

@@ -18,7 +18,7 @@ foreach ($productsList as $product) {
     $html .= "<p>$manufacturer</p>";
     $html .= "<p>$os</p>";
     $html .= "<p>$image_path</p>";
-    $html .= "<a href='productDetails.php?id=$id'>View</a>";
+    $html .= "<a href='product_details.php?id=$id'>View</a>";
     $html .= "</div>";
     echo $html;
 }

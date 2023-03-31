@@ -51,16 +51,22 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
         $html = "<div>ERROR!! " . $e->getMessage() . "</div>";
     }
 } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (!$_SESSION['userId']) {
+        header('location: login.php');
+        exit();
+    }
     $productId = FormValidationUtils::sanitizeFields($_POST["productId"]);
     $quantity = FormValidationUtils::sanitizeFields($_POST["quantity"]);
-    $price = FormValidationUtils::sanitizeFields($_POST["price"]);
-    $name = FormValidationUtils::sanitizeFields($_POST["name"]);
-    $imagePath = FormValidationUtils::sanitizeFields($_POST["imagePath"]);
+    $product = new Product();
+    $productDetail = $product->getProductById($productId);
+    $price = $productDetail->getPrice();
+    $imagePath = $productDetail->getImagePath();
+    $name = $productDetail->getName();
+
     if (isset($_SESSION["Cart"])) {
         $cart = new Cart(["userId" => $_SESSION["userId"]]);
         $cartDetails = $cart->getCartDetails();
         $cartProductIds = [];
-
         foreach ($cartDetails as $cartDetail) {
             $cartProductIds[] = $cartDetail->getProductId();
         }
@@ -68,8 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
         if (in_array($productId, $cartProductIds)) {
             foreach ($cartDetails as $cartDetail) {
                 if ($cartDetail->getProductId() == $productId) {
+                    $cart->setTotal($cart->getTotal() + ($quantity * $cartDetail->getPrice()));
                     $cartDetail->setQuantity($cartDetail->getQuantity() + $quantity);
-                    $cart->setTotal($cart->getTotal() + ($cartDetail->getQuantity() * $cartDetail->getPrice()));
                     $cart->updateCart();
                     $cart->updateCartDetails($cartDetail->getQuantity(), $cartDetail->getProductId());
                     break;
@@ -90,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
         );
     }
     $html = "<script>alert('Product added to cart!');</script>";
+    header('location: cart.php');
 } else {
     $html = "<div>Invalid Page Request</div>";
 }
@@ -122,10 +129,6 @@ echo $html;
 
 <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <input type="hidden" value="<?= $productId ?>" name="productId" />
-    <input type="hidden" value="<?= $price ?>" name="price" />
-    <input type="hidden" value="<?= $name ?>" name="name" />
-    <input type="hidden" value="<?= $imagePath ?>" name="imagePath" />
-    <input type="hidden" value="<?= $price ?>" name="price" />
     Quantity
     <select name="quantity">
         <option value="1">1</option>

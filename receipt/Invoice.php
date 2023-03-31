@@ -103,8 +103,8 @@ class Invoice extends FPDF
 
         $this->Cell(15, 1, '', 0, 0, 'C');
         $this->Cell(20, 20, 'S.N.', 0, 0, 'C');
-        $this->Cell(40, 20, 'Model', 0, 0, 'C');
-        $this->Cell(35, 20, 'Qty', 0, 0, 'C');
+        $this->Cell(50, 20, 'Model', 0, 0, 'C');
+        $this->Cell(25, 20, 'Qty', 0, 0, 'C');
         $this->Cell(40, 20, 'Unit Price', 0, 0, 'C');
         $this->Cell(30, 20, 'Price', 0, 0, 'C');
         $this->Ln(10);
@@ -116,8 +116,8 @@ class Invoice extends FPDF
             $total = $qty * $price;
             $this->Cell(15, 1, '', 0, 0, 'C');
             $this->Cell(20, 20, $index + 1, 0, 0, 'C');
-            $this->Cell(40, 20, $item['name'], 0, 0, 'C');
-            $this->Cell(35, 20, $item['qty'], 0, 0, 'C');
+            $this->Cell(50, 20, $item['name'], 0, 0, 'C');
+            $this->Cell(25, 20, $item['qty'], 0, 0, 'C');
             $this->Cell(40, 20, "$price", 0, 0, 'C');
             $this->Cell(30, 20, "$$total", 0, 0, 'C');
             $this->Ln(10);
@@ -149,6 +149,6 @@ class Invoice extends FPDF
             0,
             'C'
         );
-        $this->Output();
+        $this->Output('I');
     }
 }

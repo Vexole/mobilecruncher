@@ -1,6 +1,6 @@
 <?php
 
-class Sale
+class Receipt
 {
     protected $firstName;
     protected $lastName;

@@ -146,7 +146,7 @@ class User
 
                     $cart = new Cart(["userId" => $row['id']]);
                     $cart->getCart();
-                    
+
                     header('location: index.php');
                 } else {
                     $this->errors[] = "Invalid credentials. Please try again!";
@@ -162,8 +162,8 @@ class User
     public function logoutUser()
     {
         $_SESSION = [];
+        unset($_SESSION);
         session_destroy();
-        setcookie("PHPSESSID", '', time() - 1000, "/", '', 0, 0);
     }
 
     function redirectIfLoggedIn()

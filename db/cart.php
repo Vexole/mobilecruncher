@@ -99,7 +99,8 @@ class Cart
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (sizeOf($row) > 0) {
-            $_SESSION["Cart"] = $row[0]['id'];
+            $_SESSION["Cart"] = $row['id'];
+            $this->total = $row['total'];
         }
     }
 
@@ -110,7 +111,6 @@ class Cart
             "userId" => $this->userId
         ]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($row);
         if ($row && sizeOf($row) > 0) {
             $cartId = $row['id'];
             $this->total = $row["total"];
@@ -143,11 +143,29 @@ class Cart
         ]);
     }
 
+    public function completeSale()
+    {
+        $stmt = $this->pdo->prepare(Queries::$completeSaleById);
+        $stmt->execute([
+            "cartId" => $_SESSION["Cart"]
+        ]);
+    }
+
+
     public function updateCartDetails($quantity, $productId)
     {
         $stmt = $this->pdo->prepare(Queries::$updateCartDetailsById);
         $stmt->execute([
             "quantity" => $quantity,
+            "productId" => $productId,
+            "cartId" => $_SESSION["Cart"]
+        ]);
+    }
+
+    public function removeProductFromCart($productId)
+    {
+        $stmt = $this->pdo->prepare(Queries::$removeProductFromCart);
+        $stmt->execute([
             "productId" => $productId,
             "cartId" => $_SESSION["Cart"]
         ]);

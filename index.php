@@ -6,14 +6,14 @@
     <a href="login.php">Login</a>
     <a href="register.php">Register</a>
     <a href="products.php">Products</a>
+    <a href="cart.php">Cart</a>
+    <a href="logout.php">Logout</a>
 </body>
 
 </html>
 
 <?php
-ob_start();
-require_once("./receipt/Invoice.php");
-require_once("./sale.php");
+// ob_start();
 
 // $invoice = new Invoice();
 // $items = array(
