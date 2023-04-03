@@ -1,7 +1,8 @@
 <?php
 require_once('Database.php');
-require_once('queries.php');
-require_once('./utils/FormValidationUtils.php');
+require_once('Queries.php');
+require_once('./utils/formValidationUtils.php');
+require_once('Cart.php');
 session_start();
 
 class User
@@ -9,10 +10,10 @@ class User
     protected $firstName;
     protected $lastName;
     protected $email;
+    protected $phone;
     protected $username;
     protected $password;
-    protected $phone;
-    protected $errors;
+    protected $errors = [];
     protected $pdo;
 
     public function __construct($data)
@@ -21,39 +22,82 @@ class User
         if (isset($data["firstName"])) $this->setFirstName($data['firstName']);
         if (isset($data["lastName"])) $this->setLastName($data['lastName']);
         if (isset($data["email"])) $this->setEmail($data['email']);
+        if (isset($data["phone"])) $this->setphone($data['phone']);
         if (isset($data["username"])) $this->setUsername($data['username']);
         if (isset($data["password"])) $this->setPassword($data['password']);
-        if (isset($data["phone"])) $this->setphone($data['phone']);
     }
 
     function setFirstName($argFirstName)
     {
         $this->firstName = FormValidationUtils::sanitizeFields($argFirstName);
+        if (empty($this->firstName) || !FormValidationUtils::validateName($this->firstName)) {
+            $this->errors[] = "Invalid First Name.";
+        }
     }
 
     function setLastName($argLastName)
     {
         $this->lastName = FormValidationUtils::sanitizeFields($argLastName);
+        if (empty($this->lastName) || !FormValidationUtils::validateName($this->lastName)) {
+            $this->errors[] = "Invalid Last Name.";
+        }
     }
 
     function setEmail($argEmail)
     {
         $this->email = FormValidationUtils::sanitizeFields($argEmail);
+        if (empty($this->email) || !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = "Invalid Email Address.";
+        }
     }
 
     function setUsername($argUsername)
     {
         $this->username = FormValidationUtils::sanitizeFields($argUsername);
+        if (empty($this->username) || !FormValidationUtils::validateName($this->username)) {
+            $this->errors[] = "Invalid Username.";
+        }
     }
 
     function setPassword($argPassword)
     {
         $this->password = FormValidationUtils::sanitizeFields($argPassword);
+        if (empty($this->password)) {
+            $this->errors[] = "Invalid Password.";
+        }
     }
 
     function setphone($argPhone)
     {
         $this->phone = FormValidationUtils::sanitizeFields($argPhone);
+        if (empty($this->phone) || !FormValidationUtils::validateCellNumber($this->phone)) {
+            $this->errors[] = "Invalid Phone Number.";
+        }
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     function getErrors()
@@ -81,8 +125,9 @@ class User
                 "userId" => $id,
                 "password" => $hashedPassword
             ]);
+            header('location: index.php');
         } catch (Exception $ex) {
-
+            $this->errors[] = $ex->getMessage();
         }
     }
 
@@ -98,12 +143,40 @@ class User
                 if (password_verify($this->password, $row['password'])) {
                     session_regenerate_id();
                     $_SESSION["userId"] = $row['id'];
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception $ex) {
 
+                    $cart = new Cart(["userId" => $row['id']]);
+                    $cart->getCart();
+
+                    header('location: index.php');
+                } else {
+                    $this->errors[] = "Invalid credentials. Please try again!";
+                }
+            } else {
+                $this->errors[] = "Invalid credentials. Please try again!";
+            }
+        } catch (Exception $ex) {
+            $this->errors[] = $ex->getMessage();
+        }
+    }
+
+    public function logoutUser()
+    {
+        $_SESSION = [];
+        unset($_SESSION);
+        session_destroy();
+    }
+
+    function redirectIfLoggedIn()
+    {
+        if (!empty($_SESSION["userId"])) {
+            header("location: index.php");
+        }
+    }
+
+    function redirectIfNotLoggedIn()
+    {
+        if (empty($_SESSION["userId"])) {
+            header("location: login.php");
         }
     }
 }
