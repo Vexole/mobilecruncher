@@ -2,14 +2,15 @@
 require_once('./db/User.php');
 require_once('./utils/AuthValidationUtils.php');
 
-AuthValidationUtils::redirectIfLoggedIn();
+AuthValidationUtils::redirectIfNotLoggedIn();
 
-$user = null;
+$user = new User([]);
+$user->getUser();
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = new User($_POST);
-    if (count($user->getErrors()) == 0) $user->loginUser();
+    if (count($user->getErrors()) == 0) $user->changePassword();
 }
-
 ?>
 
 <!doctype html>
@@ -17,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
     <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        Username: <input type="text" name="username" value="<?= $user ? $user->getUsername() : '' ?>" />
-        Password: <input type="text" name="password" />
-        <input type="submit" value="Login" />
+        Username: <input type="text" name="username" disabled value="<?= $user ? $user->getUsername() : '' ?>" />
+        New Password: <input type="text" name="password" />
+        <input type="submit" value="Change Password" />
     </form>
-    <a href="change_password.php">Change Password</a>
+
     <?php if ($user) {
         foreach ($user->getErrors() as $error) {
             echo "<p class='error'>$error</p>";
@@ -29,4 +30,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     ?>
 </body>
+
 </html>

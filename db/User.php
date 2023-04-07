@@ -7,6 +7,7 @@ session_start();
 
 class User
 {
+    protected $id;
     protected $firstName;
     protected $lastName;
     protected $email;
@@ -22,7 +23,7 @@ class User
         if (isset($data["firstName"])) $this->setFirstName($data['firstName']);
         if (isset($data["lastName"])) $this->setLastName($data['lastName']);
         if (isset($data["email"])) $this->setEmail($data['email']);
-        if (isset($data["phone"])) $this->setphone($data['phone']);
+        if (isset($data["phone"])) $this->setPhone($data['phone']);
         if (isset($data["username"])) $this->setUsername($data['username']);
         if (isset($data["password"])) $this->setPassword($data['password']);
     }
@@ -67,7 +68,7 @@ class User
         }
     }
 
-    function setphone($argPhone)
+    function setPhone($argPhone)
     {
         $this->phone = FormValidationUtils::sanitizeFields($argPhone);
         if (empty($this->phone) || !FormValidationUtils::validateCellNumber($this->phone)) {
@@ -105,6 +106,23 @@ class User
         return $this->errors;
     }
 
+    public function getUser()
+    {
+        $stmt = $this->pdo->prepare(Queries::$getUserDetails);
+        $stmt->execute([
+            "userId" => $_SESSION["userId"],
+        ]);
+
+        if ($stmt->rowCount() == 1) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->setFirstName($row['first_name']);
+            $this->setLastName($row['last_name']);
+            $this->setEmail($row['email']);
+            $this->setPhone($row['phone']);
+            $this->setUsername($row['username']);
+        }
+    }
+
     public function registerUser()
     {
         try {
@@ -131,6 +149,57 @@ class User
         }
     }
 
+    public function updateUser()
+    {
+        if (!empty($_SESSION["userId"])) {
+            $id =  $_SESSION['userId'];
+            try {
+                $stmt = $this->pdo->prepare(Queries::$updateUserQuery);
+                $stmt->execute([
+                    "email" => $this->email,
+                    "phone" => $this->phone,
+                    "userId" => $id,
+                ]);
+
+                $stmt = $this->pdo->prepare(Queries::$updatePasswordQuery);
+                $stmt->execute(["userId" => $id]);
+
+                $stmt = $this->pdo->prepare(Queries::$insertPasswordQuery);
+                $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+                $stmt->execute([
+                    "userId" => $id,
+                    "password" => $hashedPassword
+                ]);
+                echo "<script>alert('Account Updated');</script>";
+                header('location: my_accounts.php');
+            } catch (Exception $ex) {
+                $this->errors[] = $ex->getMessage();
+            }
+        }
+    }
+
+    public function changePassword()
+    {
+        if (!empty($_SESSION["userId"])) {
+            $id =  $_SESSION['userId'];
+            try {
+                $stmt = $this->pdo->prepare(Queries::$updatePasswordQuery);
+                $stmt->execute(["userId" => $id]);
+
+                $stmt = $this->pdo->prepare(Queries::$insertPasswordQuery);
+                $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+                $stmt->execute([
+                    "userId" => $id,
+                    "password" => $hashedPassword
+                ]);
+                echo "<script>alert('Account Updated');</script>";
+                header('location: my_accounts.php');
+            } catch (Exception $ex) {
+                $this->errors[] = $ex->getMessage();
+            }
+        }
+    }
+
     public function loginUser()
     {
         try {
@@ -143,6 +212,7 @@ class User
                 if (password_verify($this->password, $row['password'])) {
                     session_regenerate_id();
                     $_SESSION["userId"] = $row['id'];
+                    var_dump($row);
 
                     $cart = new Cart(["userId" => $row['id']]);
                     $cart->getCart();
@@ -166,17 +236,35 @@ class User
         session_destroy();
     }
 
-    function redirectIfLoggedIn()
+    public function deleteUser()
     {
-        if (!empty($_SESSION["userId"])) {
-            header("location: index.php");
-        }
-    }
+        try {
+            $userId = $_SESSION["userId"];
+            $stmt = $this->pdo->prepare(Queries::$deleteSales);
+            $stmt->execute([
+                "userId" => $userId
+            ]);
 
-    function redirectIfNotLoggedIn()
-    {
-        if (empty($_SESSION["userId"])) {
-            header("location: login.php");
+            $stmt = $this->pdo->prepare(Queries::$deleteCartDetails);
+            $stmt->execute([
+                "userId" => $userId
+            ]);
+
+            $stmt = $this->pdo->prepare(Queries::$deleteCart);
+            $stmt->execute([
+                "userId" => $userId
+            ]);
+
+            $stmt = $this->pdo->prepare(Queries::$deletePassword);
+            $stmt->execute([
+                "userId" => $userId
+            ]);
+
+            $stmt = $this->pdo->prepare(Queries::$deleteUser);
+            $stmt->execute([
+                "userId" => $userId
+            ]);
+        } catch (Exception $e) {
         }
     }
 }

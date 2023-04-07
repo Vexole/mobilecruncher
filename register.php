@@ -1,5 +1,8 @@
 <?php
 require_once('./db/User.php');
+require_once('./utils/AuthValidationUtils.php');
+
+AuthValidationUtils::redirectIfLoggedIn();
 $user = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

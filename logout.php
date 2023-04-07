@@ -1,5 +1,8 @@
 <?php
 require_once('./db/User.php');
+require_once('./utils/AuthValidationUtils.php');
+
+AuthValidationUtils::redirectIfNotLoggedIn();
 
 $user = new User($_SESSION['userId']);
 $user->logoutUser();

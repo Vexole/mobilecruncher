@@ -2,11 +2,18 @@
 
 class Queries
 {
+    public static $getUserDetails = "SELECT * FROM users WHERE id=:userId";
+
     public static $registerUserQuery = "INSERT INTO users(first_name, last_name, email, username, phone) 
         VALUES(:firstName, :lastName, :email, :username, :phone)";
+    
+    public static $updateUserQuery = "UPDATE users SET email=:email, phone=:phone WHERE id=:userId";
 
     public static $insertPasswordQuery = "INSERT INTO passwords(user_id, password) 
         VALUES (:userId, :password)";
+
+    public static $updatePasswordQuery = "UPDATE passwords SET is_current = 0 WHERE
+        user_id=:userId AND is_current = 1";
 
     public static $loginQuery = "SELECT u.id, p.password FROM users u JOIN passwords p 
         ON u.id = p.user_id WHERE u.username = :username AND p.is_current = 1";
@@ -74,4 +81,16 @@ class Queries
         VALUES(:firstName, :lastName, :email, :phone, :addressLine, :city, :country)";
 
     public static $getPaymentMethods = "SELECT * FROM payment_methods";
+
+    public static $deleteUser = "DELETE FROM users WHERE id=:userId";
+
+    public static $deletePassword = "DELETE FROM passwords WHERE user_id=:userId";
+
+    public static $deleteCart = "DELETE FROM carts WHERE user_id=:userId";
+
+    public static $deleteCartDetails = "DELETE FROM cart_details WHERE cart_id IN 
+        (SELECT id FROM carts WHERE user_id=:userId)";
+
+    public static $deleteSales = "DELETE FROM sales WHERE cart_id IN
+        (SELECT id FROM carts WHERE user_id=:userId)";
 }
