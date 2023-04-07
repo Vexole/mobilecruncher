@@ -6,6 +6,9 @@ require_once('./db/Cart.php');
 require_once('./receipt/Receipt.php');
 require_once('./receipt/Invoice.php');
 require_once('./utils/PaymentMapping.php');
+require_once('./utils/AuthValidationUtils.php');
+
+AuthValidationUtils::redirectIfNotLoggedIn();
 session_start();
 
 $paymentMethods = new Payment();

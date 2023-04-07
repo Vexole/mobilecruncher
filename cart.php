@@ -2,7 +2,9 @@
 session_start();
 require_once('./db/Cart.php');
 require_once('./utils/formValidationUtils.php');
+require_once('./utils/AuthValidationUtils.php');
 
+AuthValidationUtils::redirectIfNotLoggedIn();
 $cart = new Cart(["userId" => $_SESSION["userId"]]);
 $cart->getCartDetails();
 
