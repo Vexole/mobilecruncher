@@ -72,3 +72,23 @@
 .mc-color-gray-02 {
   color: #505050;
 }
+
+.product-image {
+  height: 270px;
+  width: 100%;
+  object-fit: contain;
+  margin: 16px 0;
+}
+
+.cart-product-image {
+  height: 50px;
+  object-fit: contain;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 50px repeat(2, auto);
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 20px;
+}
