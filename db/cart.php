@@ -98,7 +98,7 @@ class Cart
         ]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (sizeOf($row) > 0) {
+        if ($row && sizeOf($row) > 0) {
             $_SESSION["Cart"] = $row['id'];
             $this->total = $row['total'];
         }

@@ -126,7 +126,7 @@ require_once('./utils/formValidationUtils.php');
             $html = "<div>ERROR!! " . $e->getMessage() . "</div>";
         }
     } else if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        if (!$_SESSION['userId']) {
+        if (!isset($_SESSION['userId']) || !$_SESSION['userId']) {
             header('location: login.php');
             exit();
         }

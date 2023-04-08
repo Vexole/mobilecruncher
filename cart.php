@@ -61,9 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['product_id'])) {
                     Login/Register
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
                     <li><a class="dropdown-item mc-color-gray-02" href="change_password.php"><i class="bi bi-person-add me-2"></i>Change Password</a></li>
-                    <li><a class="dropdown-item mc-color-gray-02" href="register.php"><i class="bi bi-person-add me-2"></i>Register</a></li>
                     <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </li>
@@ -106,17 +104,20 @@ foreach ($cart->getCartDetail() as $cartItem) {
       <div>
           {$cartItem->getImagePath()} \t 
           <h5>{$cartItem->getQuantity()} x {$cartItem->getName()} \t 
-          <span class='mc-color-primary'> {$cartItem->getPrice()}<span></h5> \t";
+          <span class='mc-color-primary'> \${$cartItem->getPrice()}<span></h5> \t";
   $html .= "</div>";
   $html .= "</div>";
 }
 
-$html .= "<h3 class='my-4 mc-color-primary text-end'><em>Total: {$cart->getTotal()}</em></h3>";
-$html .= "<div class='mb-5 col-md-6 mx-auto'>";
-$html .= "<a href='checkout.php' class='btn btn-primary btn-lg col-md-12'><i class='bi bi-cart-check-fill me-2'></i>Checkout</a>";
+if ($cart->getCartDetail()) {
+    $html .= "<h3 class='my-4 mc-color-primary text-end'><em>Total: \${$cart->getTotal()}</em></h3>";
+    $html .= "<div class='mb-5 col-md-6 mx-auto'>";
+    $html .= "<a href='checkout.php' class='btn btn-primary btn-lg col-md-12'><i class='bi bi-cart-check-fill me-2'></i>Checkout</a>";
+    $html .= "</div>";
+} else {
+    $html .= '<h2 class="text-center my-4">Cart is Empty! Try Adding Products.</h2>';
+}
 $html .= "</div>";
-$html .= "</div>";
-
 echo $html;
 ?>
 <footer class="text-center text-white">
