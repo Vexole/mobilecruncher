@@ -70,6 +70,14 @@ require_once("./db/Product.php");
     </header>
     <div class="container-fluid">
         <h1 class="text-center my-4">MobileCrunchers - Products</h1>
+        <form>
+            <div class="d-flex col-md-4 mx-auto">
+                <input type="text" class="form-control" id="search_product" name="search_product" placeholder="Search Product" aria-label="Search Product" aria-describedby="Search Product" />
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
         <?php
             $products = new Product();
             $productsList = $products->getProductList();
