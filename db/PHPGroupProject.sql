@@ -174,7 +174,7 @@ INSERT INTO products (name, price, quantity, image_path) VALUES
 ('Xiaomi Mi 11 Ultra', 999.00, 40, 'xiaomi_mi_11_ultra.jpg'),
 ('Oppo Find X3 Pro', 1199.99, 35, 'oppo_find_x3_pro.jpg'),
 ('Vivo X60 Pro+', 999.00, 25, 'vivo_x60_pro+.jpg'),
-('Motorola Moto G Power (2022)', 199.99, 60, 'motorola_moto_g_power.jpg'),
+('Motorola Moto G Power', 199.99, 60, 'motorola_moto_g_power.jpg'),
 ('Nokia 7.2', 299.99, 15, 'nokia_7.2.jpg'),
 ('LG V60 ThinQ 5G', 799.99, 10, 'lg_v60_thinq_5g.jpg'),
 ('Sony Xperia 1 III', 1299.99, 20, 'sony_xperia_1_iii.jpg');
