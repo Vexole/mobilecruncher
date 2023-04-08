@@ -40,17 +40,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <li class="nav-item">
                     <a class="nav-link mc-nav-link" href="cart.php">Cart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link mc-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Login/Register
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
-                    <li><a class="dropdown-item mc-color-gray-02" href="register.php"><i class="bi bi-person-add me-2"></i>Register</a></li>
+                        <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+                        <li><a class="dropdown-item mc-color-gray-02" href="register.php"><i class="bi bi-person-add me-2"></i>Register</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
                 </li>
                 </ul>
             </div>

@@ -90,18 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 <li class="nav-item">
                     <a class="nav-link mc-nav-link" href="my_accounts.php">My Accounts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link mc-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Login/Register
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
-                    <li><a class="dropdown-item mc-color-gray-02" href="change_password.php"><i class="bi bi-person-add me-2"></i>Change Password</a></li>
-                    <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+                        <li><a class="dropdown-item mc-color-gray-02" href="change_password.php"><i class="bi bi-person-add me-2"></i>Change Password</a></li>
+                        <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
                 </li>
                 </ul>
             </div>
@@ -127,36 +127,60 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     </header>
     <div class="container-fluid">
         <h1 class="text-center my-4">MobileCrunchers - Checkout</h1>
-    <?php
-    if ($checkout) {
-        foreach ($checkout->getErrors() as $error) {
-            echo "<p class='error'>$error</p>";
+        <?php
+        if ($checkout) {
+            foreach ($checkout->getErrors() as $error) {
+                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
+            }
         }
-    }
-    if ($sales) {
-        foreach ($sales->getErrors() as $error) {
-            echo "<p class='error'>$error</p>";
+        if ($sales) {
+            foreach ($sales->getErrors() as $error) {
+                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
+            }
         }
-    }
-    ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        FirstName: <input type="text" name="first_name" value="<?= $checkout ? $checkout->getFirstName() : '' ?>" />
-        LastName: <input type="text" name="last_name" value="<?= $checkout ? $checkout->getLastName() : '' ?>" />
-        Email: <input type="email" name="email" value="<?= $checkout ? $checkout->getEmail() : '' ?>" />
-        Phone: <input type="number" name="phone" value="<?= $checkout ? $checkout->getPhone() : '' ?>" />
-        Address Line: <input type="text" name="address_line" value="<?= $checkout ? $checkout->getAddressLine() : '' ?>" />
-        City: <input type="text" name="city" value="<?= $checkout ? $checkout->getCity() : '' ?>" />
-        Country: <input type="text" name="country" value="<?= $checkout ? $checkout->getCountry() : '' ?>" />
-
-        Payment:
-        <select name="payment_method">
-            <?php foreach ($paymentMethodsList as $payment) {
-                $selected = ($sales && $payment->getId() == $sales->getPaymentMethodId()) ? 'selected' : '';
-                echo "<option value='" . $payment->getId() . "' " . $selected . ">" . $payment->getName() . "</option>";
-            } ?>
-        </select>
-        <input type="submit" value="Checkout" />
-    </form>
+        ?>
+        <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  class="d-flex justify-content-center flex-column mb-5">
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="firstname"><em>First Name</em></label>
+                <input type="text" class="form-control" id="firstname" name="first_name" placeholder="First Name" aria-label="First Name" aria-describedby="First Name" value="<?= $checkout ? $checkout->getFirstName() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="username"><em>Last Name</em></label>
+                <input type="text" class="form-control" id="lastname" name="last_name" placeholder="Last Name" aria-label="Last Name" aria-describedby="Last Name" value="<?= $checkout ? $checkout->getLastName() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="username"><em>Email</em></label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Email" aria-label="Email" aria-describedby="Email" value="<?= $checkout ? $checkout->getEmail() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="phone"><em>Phone</em></label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" aria-label="Phone" aria-describedby="Phone" value="<?= $checkout ? $checkout->getPhone() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="address_line"><em>Address Line</em></label>
+                <input type="text" class="form-control" id="address_line" name="address_line" placeholder="Address Line" aria-label="Address Line" aria-describedby="Address Line" value="<?= $checkout ? $checkout->getAddressLine() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="city"><em>City</em></label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="City" aria-label="city" aria-describedby="city" value="<?= $checkout ? $checkout->getCity() : '' ?>">
+            </div>
+            <div class="form-group col-md-4 mx-auto mt-3">
+                <label for="country"><em>Country</em></label>
+                <input type="text" class="form-control" id="country" name="country" placeholder="Country" aria-label="country" aria-describedby="country" value="<?= $checkout ? $checkout->getCountry() : '' ?>">
+            </div>
+            <div class="col-md-4 mx-auto mt-3">
+                <select name="payment_method" class="form-select form-select-md">
+                    <?php foreach ($paymentMethodsList as $payment) {
+                        $selected = ($sales && $payment->getId() == $sales->getPaymentMethodId()) ? 'selected' : '';
+                        echo "<option value='" . $payment->getId() . "' " . $selected . ">" . $payment->getName() . "</option>";
+                    } ?>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex mx-auto">
+                <button type="submit" class="btn btn-primary mt-4 col-md-12 mx-auto"><i class="bi bi-bag-check-fill me-2"></i>Order</button>
+            </div>
+        </form>
+    </div>
     <footer class="text-center text-white">
         <div class="text-center p-3 mc-bg-primary">
             © 2023 Copyright. MobileCrunchers.

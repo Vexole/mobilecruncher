@@ -55,9 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['product_id'])) {
                         <li class="nav-item">
                             <a class="nav-link mc-nav-link" href="my_accounts.php">My Accounts</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link mc-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Login/Register
@@ -66,6 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['product_id'])) {
                                 <li><a class="dropdown-item mc-color-gray-02" href="change_password.php"><i class="bi bi-person-add me-2"></i>Change Password</a></li>
                                 <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                             </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
                         </li>
                     </ul>
                 </div>
@@ -115,16 +115,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['product_id'])) {
             $html .= "<a href='checkout.php' class='btn btn-primary btn-lg col-md-12'><i class='bi bi-cart-check-fill me-2'></i>Checkout</a>";
             $html .= "</div>";
         } else {
-            $html .= '<h2 class="text-center my-4">Cart is Empty! Try Adding Products.</h2>';
+            $html .= '<h5 class="text-center my-4">Cart is Empty! Try Adding Products.</h5>';
         }
         $html .= "</div>";
         echo $html;
         ?>
-        <footer class="text-center text-white">
-            <div class="text-center p-3 mc-bg-primary">
-                © 2023 Copyright. MobileCrunchers.
-            </div>
-        </footer>
+    </div>
+    <footer class="text-center text-white">
+        <div class="text-center p-3 mc-bg-primary">
+            © 2023 Copyright. MobileCrunchers.
+        </div>
+    </footer>
 </body>
 
 </html>

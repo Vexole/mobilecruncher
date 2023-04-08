@@ -29,9 +29,6 @@
           <li class="nav-item">
             <a class="nav-link mc-nav-link" href="my_accounts.php">My Accounts</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link mc-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Login/Register
@@ -42,6 +39,9 @@
               <li><a class="dropdown-item mc-color-gray-02" href="register.php"><i class="bi bi-person-add me-2"></i>Register</a></li>
               <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mc-nav-link" href="personal_support.php">Customer Support</a>
           </li>
         </ul>
       </div>
@@ -72,7 +72,7 @@
       <At> Welcome to our mobile store! We are dedicated to providing our customers with the best possible shopping experience. Our store was established in 2010 with the goal of offering high-quality mobile phones and accessories at affordable prices. Since then, we have evolved to meet the changing needs of our customers by expanding our product line and offering new services such as phone repairs and trade-ins. At our mobile store, we believe that everyone deserves access to high-quality mobile phones and accessories at affordable prices. That’s why we work hard to source the best products from around the world and offer them at prices that are accessible to everyone.</p>
     </div>
     <div class="col-md-4">
-      <img src="images/phonesheader.jpg" class="card-img-top mt-3" alt="Mobile Phones on About Us Section"/>
+      <img src="images/phones2.jpg" class="card-img-top mt-3" alt="Mobile Phones on About Us Section"/>
     </div>
   </div>
 </div>
@@ -106,28 +106,28 @@
     <h6 class="mc-color-gray text-center mb-4">What our customers are saying...</h6>
     <div class="d-flex justify-content-center">
       <div class="card col-md-2 me-4">
-        <img src="images/customer1.jpg" class="card-img-top mt-3" alt="Customer Man Picture"/>
+        <img src="images/customer1.jpg" class="card-img-top mt-3 px-3" alt="Customer Man Picture"/>
         <div class="card-body">
             <h6 class="card-title mc-color-primary text-center"><em>Lance Jarvisc</em></h6>
             <p class="card-text mc-color-gray text-center">I was blown away by how easy it was to find what I was looking for on this website. MobileCrunchers has a great selection of phones and accessories at affordable prices.</p>
         </div>
       </div>
       <div class="card col-md-2 me-4">
-        <img src="images/customer2.jpg" class="card-img-top mt-3" alt="Customer Woman Picture"/>
+        <img src="images/customer2.jpg" class="card-img-top mt-3 px-3" alt="Customer Woman Picture"/>
         <div class="card-body">
             <h6 class="card-title mc-color-primary text-center"><em>Ericka Lynda</em></h6>
             <p class="card-text mc-color-gray text-center">I had a great experience shopping at this mobile store! The staff was knowledgeable and friendly, and they helped me find exactly what I was looking for.</p>
         </div>
       </div>
       <div class="card col-md-2 me-4">
-        <img src="images/customer3.jpg" class="card-img-top mt-3" alt="Customer Man Picture"/>
+        <img src="images/customer3.jpg" class="card-img-top mt-3 px-3" alt="Customer Woman Picture"/>
         <div class="card-body">
             <h6 class="card-title mc-color-primary text-center"><em>Kat Park</em></h6>
             <p class="card-text mc-color-gray text-center">I recently purchased a new phone from this mobile store and I couldn't be happier with my purchase! The phone is high-quality and works perfectly.</p>
         </div>
       </div>
       <div class="card col-md-2 me-4">
-        <img src="images/customer4.jpg" class="card-img-top mt-3" alt="Customer Woman Picture"/>
+        <img src="images/customer4.jpg" class="card-img-top mt-3 px-3" alt="Customer Man Picture"/>
         <div class="card-body">
             <h6 class="card-title mc-color-primary text-center"><em>Neil Wilford</em></h6>
             <p class="card-text mc-color-gray text-center">I've been a customer of this mobile store for years and I've always been impressed with their selection of phones and accessories. The staff is always friendly and helpful..</p>
