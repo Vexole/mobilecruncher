@@ -53,7 +53,7 @@ class Invoice extends FPDF
         $this->Cell(70, 20, 'Store: Ecom', 0, 0, 'L');
         $this->Cell(40, 20, 'Register: 1', 0, 0, 'L');
         $this->Ln(10);
-
+        date_default_timezone_set('America/Toronto');
         $this->Cell(20, 1, '', 0, 0, 'C');
         $this->Cell(12, 20, 'Date: ', 0, 0, 'L');
         $this->Cell(58, 20, date("Y-m-d"), 0, 0, 'L');
@@ -149,6 +149,6 @@ class Invoice extends FPDF
             0,
             'C'
         );
-        $this->Output('I');
+        $this->Output();
     }
 }

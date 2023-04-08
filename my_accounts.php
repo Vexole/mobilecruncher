@@ -61,9 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     Login/Register
                     </a>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item mc-color-gray-02" href="login.php"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
                     <li><a class="dropdown-item mc-color-gray-02" href="change_password.php"><i class="bi bi-person-add me-2"></i>Change Password</a></li>
-                    <li><a class="dropdown-item mc-color-gray-02" href="register.php"><i class="bi bi-person-add me-2"></i>Register</a></li>
                     <li><a class="dropdown-item mc-color-gray-02" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </li>
@@ -102,21 +100,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="form-group col-md-4 mx-auto">
                 <label for="username"><em>Email</em></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" aria-label="Email" aria-describedby="Email"  value="<?= $user ? $user->getEmail() : '' ?>">
+                <input type="text" class="form-control" id="email" name="email" placeholder="Email" aria-label="Email" aria-describedby="Email"  value="<?= $user ? $user->getEmail() : '' ?>">
             </div>
             <div class="form-group col-md-4 mx-auto mt-3">
                 <label for="phone"><em>Phone</em></label>
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" aria-label="Phone" aria-describedby="Phone"name="phone" value="<?= $user ? $user->getPhone() : '' ?>">
             </div>
             <div class="col-md-4 d-flex mx-auto">
-                <button type="submit" name="cta" class="btn btn-primary mt-4 col-md-6 mx-auto me-2">Update</button>
-                <button type="submit" name="cta" class="btn btn-primary mt-4 col-md-6 mx-auto">Delete</button>
+                <button type="submit" name="cta" value="UPDATE" class="btn btn-primary mt-4 col-md-6 mx-auto me-2">Update</button>
+                <button type="submit" name="cta" value="DELETE" class="btn btn-primary mt-4 col-md-6 mx-auto">Delete</button>
             </div>
         </form>
 
         <?php if ($user) {
             foreach ($user->getErrors() as $error) {
-                echo "<p class='error'>$error</p>";
+                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
             }
         }
         ?>
