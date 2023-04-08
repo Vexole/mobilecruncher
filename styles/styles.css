@@ -1,0 +1,74 @@
+.navbar {
+  background-color: #2163c6 !important;
+}
+
+.navbar-brand {
+  color: #fff;
+  font-weight: 600;
+}
+
+.navbar-brand :hover{
+  color: #fff;
+  font-weight: 600;
+}
+
+.mc-nav-link {
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.dropdown-item a {
+  color: #2163c6 !important;
+}
+
+.mc-btn {
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.login-btn {
+  text-decoration: none;
+  border: 1px solid #fff;
+  background: linear-gradient(#50b3eb, #2fa4e7 60%, #2c9ad9);
+  color: #fff;
+}
+
+.mc-input-icon {
+  color: #0d6efd;
+}
+
+.mc-bg-primary {
+  background-color: #2163c6 !important;
+  color: #fff !important;
+}
+
+.mc-bg-info {
+  background-color: #7e92af !important;
+  color: #fff !important;
+}
+
+.mc-btn-primary {
+  background-color: #2c9ad9;
+  border-color: #2c9ad9;
+  color: #fff;
+}
+
+.mc-btn-primary :hover {
+  background-color: #116393 !important;
+}
+
+.mc-color-primary {
+  color: #0d6efd;
+}
+
+.mc-color-secondary {
+  color: #e1ab0b;
+}
+
+.mc-color-gray {
+  color: #737474;
+}
+
+.mc-color-gray-02 {
+  color: #505050;
+}
