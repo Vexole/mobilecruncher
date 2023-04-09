@@ -9,6 +9,7 @@ require_once('./utils/PaymentMapping.php');
 require_once('./utils/AuthValidationUtils.php');
 
 session_start();
+header("Cache-Control: no cache");
 AuthValidationUtils::redirectIfNotLoggedIn();
 
 if (!isset($_SESSION["Cart"])) {
