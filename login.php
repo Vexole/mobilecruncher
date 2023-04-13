@@ -76,6 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </header>
     <div class="container-fluid">
         <h1 class="text-center my-4">MobileCrunchers - Login</h1>
+        <?php 
+            if ($user) {
+                foreach ($user->getErrors() as $error) {
+                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
+                }
+            }
+        ?>
         <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="d-flex justify-content-center flex-column mb-5">
             <div class="form-group col-md-4 mx-auto">
                 <label for="username"><em>Username</em></label>
@@ -85,16 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="password"><em>Password</em></label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" aria-label="Password" aria-describedby="password">
             </div>
-            <a class="mt-3 col-md-4 text-end mx-auto mc-color-primary" href="change_password.php">Change Password</a>
             <button type="submit" class="btn btn-primary mt-4 col-md-2 mx-auto">Login</button>
         </form>
-        <?php 
-            if ($user) {
-                foreach ($user->getErrors() as $error) {
-                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
-                }
-            }
-        ?>
     </div>
     <footer class="text-center text-white">
         <div class="text-center p-3 mc-bg-primary">

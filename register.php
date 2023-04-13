@@ -76,6 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </header>
     <div class="container-fluid">
         <h1 class="text-center my-4">MobileCrunchers - Register</h1>
+        <?php if ($user) {
+            foreach ($user->getErrors() as $error) {
+                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
+            }
+        }
+        ?>
         <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="d-flex justify-content-center flex-column mb-5">
             <div class="form-group col-md-4 mx-auto">
                 <label for="firstname"><em>First Name</em></label>
@@ -103,13 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <button type="submit" class="btn btn-primary mt-4 col-md-2 mx-auto">Register</button>
         </form>
-
-        <?php if ($user) {
-            foreach ($user->getErrors() as $error) {
-                echo "<h6 class='text-danger text-center mt-3'>$error</h6>";
-            }
-        }
-        ?>
     </div>
     <footer class="text-center text-white">
       <div class="text-center p-3 mc-bg-primary">
