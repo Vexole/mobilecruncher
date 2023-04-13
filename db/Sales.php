@@ -86,6 +86,10 @@ class Sales
         return !empty($this->errors);
     }
 
+    public function resetErrors() {
+        $this->errors = [];
+    }
+
     public function saveSalesDetail()
     {
         $stmt = $this->pdo->prepare(Queries::$saveSaleDetails);

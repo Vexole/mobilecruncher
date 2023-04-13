@@ -9,7 +9,6 @@ require_once('./utils/PaymentMapping.php');
 require_once('./utils/AuthValidationUtils.php');
 
 session_start();
-header("Cache-Control: no cache");
 AuthValidationUtils::redirectIfNotLoggedIn();
 
 if (!isset($_SESSION["Cart"])) {
@@ -30,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $sales = new Sales($_SESSION["Cart"], $cart->getTotal(), $_POST['payment_method'], $billingAddressId);
 
     if (!$checkout->hasErrors() && !$sales->hasErrors()) {
+        $_POST = array();
+        $checkout->resetErrors();
+        $sales->resetErrors();
+
         $billingAddressId = $checkout->saveBillingAddress();
         $sales->setBillingAddressId($billingAddressId);
         $sales->saveSalesDetail();
@@ -38,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         unset($_SESSION['Cart']);
         $_SESSION['Cart'] = null;
 
-        $invoice = new Invoice();
         $items = [];
         foreach ($cart->getCartDetail() as $cartItem) {
             $items[] = array(
@@ -55,7 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             0,
             $sales->getTotal()
         );
-        $invoice->generateInvoice($sale);
+        // $invoice = new Invoice();
+        // $invoice->generateInvoice($sale);
+        $_SESSION["invoice"] = $sale;
+        header("location: confirmation.php");
+        exit();
     }
 }
 ?>

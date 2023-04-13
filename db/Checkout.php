@@ -135,6 +135,10 @@ class Checkout
         return !empty($this->errors);
     }
 
+    public function resetErrors() {
+        $this->errors = [];
+    }
+
     public function saveBillingAddress()
     {
         $stmt = $this->pdo->prepare(Queries::$saveBillingAddress);
