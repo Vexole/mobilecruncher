@@ -241,6 +241,46 @@ class Product
         return $products;
     }
 
+    public function getProduct($argProductName)
+    {
+        $product = array();
+        try {
+            $stmt = $this->pdo->prepare(Queries::$productResultQuery);
+            $stmt->execute(["productName" => "%$argProductName%"]);
+            $numRow =$stmt->rowCount();
+            echo $numRow;
+            if ( $numRow > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    array_push($product, new Product(
+                        $row['id'],
+                        $row['name'],
+                        $row['price'],
+                        "",
+                        $row['image_path'],
+                        $row['ram'],
+                        $row['storage_capacity'],
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        $row['manufacturer'],
+                        $row['OS']
+
+                    ));
+                    echo "Good to go";
+                    break;
+
+                }
+
+            }
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+        return $product;
+    }
+
     public function getProductById($argProductId)
     {
         $product = null;
@@ -305,12 +345,13 @@ class Product
 
     public function getfilterProductsByOs($argOsId)
     {
-        $products = array();
+        $products = null;
         try {
-            $stmt = $this->pdo->prepare(Queries::$productListQuery);
-            $stmt->execute(["osId" => $argOsId]);
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                array_push($products, new Product(
+            $stmt = $this->pdo->prepare(Queries::$productListFilterByOSQuery);
+            $stmt->execute(["osName" => $argOsId]);
+            if ($stmt->rowCount() == 1) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $product = new Product(
                     $row['id'],
                     $row['name'],
                     $row['price'],
@@ -326,8 +367,27 @@ class Product
                     "",
                     $row['manufacturer'],
                     $row['OS']
-                ));
+                );
             }
+            // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            //     array_push($products, new Product(
+            //         $row['id'],
+            //         $row['name'],
+            //         $row['price'],
+            //         "",
+            //         $row['image_path'],
+            //         $row['ram'],
+            //         $row['storage_capacity'],
+            //         "",
+            //         "",
+            //         "",
+            //         "",
+            //         "",
+            //         "",
+            //         $row['manufacturer'],
+            //         $row['OS']
+            //     ));
+            // }
         } catch (Exception $ex) {
         }
         return $products;

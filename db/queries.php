@@ -24,11 +24,17 @@ class Queries
         JOIN manufacturers m ON pd.manufacturer_id = m.id 
         JOIN operating_systems os ON os.id = pd.os_id";
 
+    public static $productResultQuery = "SELECT p.*, pd.ram, pd.storage_capacity,
+        m.name AS manufacturer, os.name AS OS 
+        FROM products p JOIN product_details pd ON p.id = pd.product_id
+        JOIN manufacturers m ON pd.manufacturer_id = m.id 
+        JOIN operating_systems os ON os.id = pd.os_id WHERE os.name LIKE :productName";
+
     public static $productListFilterByOSQuery = "SELECT p.*, pd.ram, pd.storage_capacity, 
         m.name AS manufacturer, os.name AS OS 
-        FROM products p JOIN product_details pd ON p.id = pd.product_id 
-        JOIN manufacturers m ON pd.manufacturer_id = m.id 
-        JOIN operating_systems os ON os.id = pd.os_id WHERE os.id=:osId";
+        FROM products p JOIN product_details pd ON p.name = pd.product_name
+        JOIN manufacturers m ON pd.manufacturer_name = m.name
+        JOIN operating_systems os ON os.name = pd.os_name WHERE os.name=:osName";
 
     public static $productListFilterByManufacturerQuery = "SELECT p.*, pd.ram, pd.storage_capacity,
         m.name AS manufacturer, os.name AS OS 
