@@ -241,44 +241,37 @@ class Product
         return $products;
     }
 
-    public function getProduct($argProductName)
+    public function getFilteredProductList($argSearchKeyword)
     {
-        $product = array();
+        $products = array();
         try {
             $stmt = $this->pdo->prepare(Queries::$productResultQuery);
-            $stmt->execute(["productName" => "%$argProductName%"]);
-            $numRow =$stmt->rowCount();
-            echo $numRow;
-            if ( $numRow > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($product, new Product(
-                        $row['id'],
-                        $row['name'],
-                        $row['price'],
-                        "",
-                        $row['image_path'],
-                        $row['ram'],
-                        $row['storage_capacity'],
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        $row['manufacturer'],
-                        $row['OS']
+            $stmt->execute(["searchKeyword" => "%$argSearchKeyword%"]);
 
-                    ));
-                    echo "Good to go";
-                    break;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($products, new Product(
+                    $row['id'],
+                    $row['name'],
+                    $row['price'],
+                    "",
+                    $row['image_path'],
+                    $row['ram'],
+                    $row['storage_capacity'],
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    $row['manufacturer'],
+                    $row['OS']
 
-                }
-
+                ));
             }
         } catch (Exception $ex) {
             echo $ex->getMessage();
         }
-        return $product;
+        return $products;
     }
 
     public function getProductById($argProductId)

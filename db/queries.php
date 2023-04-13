@@ -28,7 +28,8 @@ class Queries
         m.name AS manufacturer, os.name AS OS 
         FROM products p JOIN product_details pd ON p.id = pd.product_id
         JOIN manufacturers m ON pd.manufacturer_id = m.id 
-        JOIN operating_systems os ON os.id = pd.os_id WHERE os.name LIKE :productName";
+        JOIN operating_systems os ON os.id = pd.os_id WHERE p.name LIKE :searchKeyword
+        OR os.name LIKE :searchKeyword OR m.name LIKE :searchKeyword";
 
     public static $productListFilterByOSQuery = "SELECT p.*, pd.ram, pd.storage_capacity, 
         m.name AS manufacturer, os.name AS OS 

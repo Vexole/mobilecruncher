@@ -4,6 +4,15 @@ require_once('./utils/formValidationUtils.php');
 
 unset($_SESSION['invoice']);
 $_SESSION['invoice'] = null;
+
+$products = new Product();
+$searchKeyword = "";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_product'])) {
+    $searchKeyword = FormValidationUtils::sanitizeFields($_POST["search_product"]);
+    $productsList = $products->getFilteredProductList($searchKeyword);
+} else {
+    $productsList = $products->getProductList();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,48 +83,45 @@ $_SESSION['invoice'] = null;
     </header>
     <div class="container-fluid">
         <h1 class="text-center my-4">MobileCrunchers - Products</h1>
-        <form method="POST">
+        <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="d-flex col-md-4 mx-auto">
-                <input type="text" class="form-control" id="search_product" name="search_product" placeholder="Search Product" aria-label="Search Product" aria-describedby="Search Product" />
+                <input type="text" class="form-control" id="search_product" name="search_product" value="<?= $searchKeyword ?>" placeholder="Search Product" aria-label="Search Product" aria-describedby="Search Product" />
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
         </form>
         <?php
-            $products = new Product();
-            $productsList = $products->getProductList();
-
-            $html = "<div class='py-5'>";
-                $html .= "<div class='container'>";
-                    $html .= "<div class='row hidden-md-up'>";
-                        foreach ($productsList as $product) {
-                            $id = $product->getId();
-                            $name = $product->getName();
-                            $price = $product->getPrice();
-                            $quantity = $product->getQuantity();
-                            $image_path = $product->getImagePath();
-                            $manufacturer = $product->getManufacturer();
-                            $os = $product->getOS();
-                            $html .= "<div class='col-md-4 mb-4'>";
-                                $html .= "<div class='card p-3 d-flex flex-column align-items-center'>";
-                                    $html .= "<h3 class='text-center mc-color-secondary'>$name</h3>";
-                                    $html .= "<div class='mb-3'>";
-                                        $html .= "<span class='me-4 badge mc-bg-info'>$manufacturer</span>";
-                                        $html .= "<span class='badge mc-bg-info'>$os</span>";
-                                    $html .= "</div>";
-                                    $html .= "<img class='product-image' src='images/{$image_path}' alt='{$image_path}'>";
-                                    $html .= "<h4 class='mc-color-primary'>$$price</h4>";
-                                    $html .= "<div class='d-grid col-6 mx-auto'>";
-                                        $html .= "<a href='product_details.php?id=$id' class='btn btn-secondary'>View Details</a>";
-                                    $html .= "</div>";
-                                $html .= "</div>";
-                            $html .= "</div>";
-                        }
-                    $html .= "</div>";
-                $html .= "</div>";
+        $html = "<div class='py-5'>";
+        $html .= "<div class='container'>";
+        $html .= "<div class='row hidden-md-up'>";
+        foreach ($productsList as $product) {
+            $id = $product->getId();
+            $name = $product->getName();
+            $price = $product->getPrice();
+            $quantity = $product->getQuantity();
+            $image_path = $product->getImagePath();
+            $manufacturer = $product->getManufacturer();
+            $os = $product->getOS();
+            $html .= "<div class='col-md-4 mb-4'>";
+            $html .= "<div class='card p-3 d-flex flex-column align-items-center'>";
+            $html .= "<h3 class='text-center mc-color-secondary'>$name</h3>";
+            $html .= "<div class='mb-3'>";
+            $html .= "<span class='me-4 badge mc-bg-info'>$manufacturer</span>";
+            $html .= "<span class='badge mc-bg-info'>$os</span>";
             $html .= "</div>";
-            echo $html;
+            $html .= "<img class='product-image' src='images/{$image_path}' alt='{$image_path}'>";
+            $html .= "<h4 class='mc-color-primary'>$$price</h4>";
+            $html .= "<div class='d-grid col-6 mx-auto'>";
+            $html .= "<a href='product_details.php?id=$id' class='btn btn-secondary'>View Details</a>";
+            $html .= "</div>";
+            $html .= "</div>";
+            $html .= "</div>";
+        }
+        $html .= "</div>";
+        $html .= "</div>";
+        $html .= "</div>";
+        echo $html;
         ?>
     </div>
 
