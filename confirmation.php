@@ -89,11 +89,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         <!-- Background image -->
     </header>
     <div class="container-fluid">
-        <h1 class="text-center my-4">Thank You For Shopping with us!</h1>
-        <form method="POST">
-            <input type="submit" name="btnAction" value="View">View Invoice</input>
-            <input type="submit" name="btnAction" value="Continue">Continue Shopping</input>
-        </form>
+        <h1 class="text-center my-4">MobileCrunchers - Successful Order!</h1>
+        <div class="card col-md-4 mx-auto pb-4 mb-4">
+            <h4 class="text-center my-4 mc-color-secondary">Thank you for shopping with us.</h4>
+            <form method="POST" class="mx-auto">
+                <button type="submit" name="btnAction" value="View" class="btn btn-primary me-4"><i class="bi bi-file-pdf me-2"></i>View Invoice</button>
+                <button type="submit" name="btnAction" value="Continue" class="btn btn-primary"><i class="bi bi-cart-fill me-2"></i>Continue Shopping</button>
+            </form>
+        </div>
 
     </div>
     <footer class="text-center text-white">
