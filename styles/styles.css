@@ -92,3 +92,13 @@
   align-items: center;
   gap: 20px;
 }
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .dropdown-menu.nav-auth {
+    left: -115px;
+  }
+
+  .navbar-expand-lg .navbar-nav .dropdown-menu.nav-unauth {
+    left: -15px;
+  }
+}

@@ -6,7 +6,7 @@ class FormValidationUtils
     {
         $sanitizedData = trim($argFieldData);
         $sanitizedData = stripslashes($sanitizedData);
-        $sanitizedData = htmlspecialchars($sanitizedData);
+        $sanitizedData = htmlentities($sanitizedData);
         return $sanitizedData;
     }
 

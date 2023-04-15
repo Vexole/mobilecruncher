@@ -8,14 +8,14 @@ class Invoice extends FPDF
     function Header()
     {
         $this->Image(
-            'images/conestogalogo.png',
-            100,
+            'images/logo.png',
+            95,
             10,
             20,
             0,
             'PNG'
         );
-        $this->Ln(16);
+        $this->Ln(26);
         $this->SetFont('Arial', 'B', 16);
         $this->Cell(0, 10, 'MOBILE CRUNCHERS', 0, 0, 'C');
         $this->Ln(10);

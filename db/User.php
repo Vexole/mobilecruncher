@@ -3,7 +3,6 @@ require_once('Database.php');
 require_once('Queries.php');
 require_once('./utils/formValidationUtils.php');
 require_once('Cart.php');
-session_start();
 
 class User
 {
@@ -143,7 +142,7 @@ class User
                 "userId" => $id,
                 "password" => $hashedPassword
             ]);
-            header('location: index.php');
+            header('location: login.php');
         } catch (Exception $ex) {
             $this->errors[] = $ex->getMessage();
         }
@@ -170,7 +169,6 @@ class User
                     "userId" => $id,
                     "password" => $hashedPassword
                 ]);
-                echo "<script>alert('Account Updated');</script>";
                 header('location: my_accounts.php');
             } catch (Exception $ex) {
                 $this->errors[] = $ex->getMessage();
@@ -192,8 +190,7 @@ class User
                     "userId" => $id,
                     "password" => $hashedPassword
                 ]);
-                echo "<script>alert('Account Updated');</script>";
-                header('location: my_accounts.php');
+                header('location: change_password.php');
             } catch (Exception $ex) {
                 $this->errors[] = $ex->getMessage();
             }
@@ -212,7 +209,7 @@ class User
                 if (password_verify($this->password, $row['password'])) {
                     session_regenerate_id();
                     $_SESSION["userId"] = $row['id'];
-                    var_dump($row);
+                    $_SESSION["username"] = $this->username;
 
                     $cart = new Cart(["userId" => $row['id']]);
                     $cart->getCart();
@@ -264,6 +261,7 @@ class User
             $stmt->execute([
                 "userId" => $userId
             ]);
+            $this->logoutUser();
         } catch (Exception $e) {
         }
     }

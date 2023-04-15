@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('./db/User.php');
 require_once('./utils/AuthValidationUtils.php');
 
