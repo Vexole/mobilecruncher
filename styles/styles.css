@@ -2,6 +2,10 @@
   background-color: #2163c6 !important;
 }
 
+.white {
+  color: white
+}
+
 .navbar-brand {
   color: #fff;
   font-weight: 600;

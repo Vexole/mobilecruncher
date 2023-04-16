@@ -57,8 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             0,
             $sales->getTotal()
         );
-        // $invoice = new Invoice();
-        // $invoice->generateInvoice($sale);
         $_SESSION["invoice"] = $sale;
         header("location: confirmation.php");
         exit();
@@ -123,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 <input type="text" class="form-control" id="country" name="country" placeholder="Country" aria-label="country" aria-describedby="country" value="<?= $checkout ? $checkout->getCountry() : '' ?>">
             </div>
             <div class="col-md-4 mx-auto mt-3">
+                <label for="payment_method"><em>Payment Method</em></label>
                 <select name="payment_method" class="form-select form-select-md">
                     <?php foreach ($paymentMethodsList as $payment) {
                         $selected = ($sales && $payment->getId() == $sales->getPaymentMethodId()) ? 'selected' : '';
