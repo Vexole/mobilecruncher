@@ -71,7 +71,7 @@ class User
     {
         $this->phone = FormValidationUtils::sanitizeFields($argPhone);
         if (empty($this->phone) || !FormValidationUtils::validateCellNumber($this->phone)) {
-            $this->errors[] = "Invalid Phone Number.";
+            $this->errors[] = "Invalid Phone Number. Must be a 10-digit number.";
         }
     }
 
