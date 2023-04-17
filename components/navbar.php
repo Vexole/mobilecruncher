@@ -24,7 +24,7 @@
                     <a class="nav-link mc-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         if (isset($_SESSION['username'])) {
-                            echo $_SESSION['username'];
+                            echo '<i class="bi bi-person me-2"></i>' . ucfirst($_SESSION["username"]);
                         } else {
                             echo "Login/Register";
                         }  ?>

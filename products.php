@@ -40,6 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_product'])) {
         <?php
         $html = "<div class='py-5'>";
         $html .= "<div class='container'>";
+        if(!empty($searchKeyword)) {
+            $html .= "<div>";
+            $html .= "<h5 class='text-center mc-color-primary mb-4'> Results for <b>" . $searchKeyword ."</b>: " . count($productsList) . " product(s).</h5>";
+            $html .= "</div>";
+        }
         $html .= "<div class='row hidden-md-up'>";
         foreach ($productsList as $product) {
             $id = $product->getId();
